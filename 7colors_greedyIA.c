@@ -19,7 +19,6 @@
 #define BOARD_SIZE 30
 
 
-
 /** Represent the actual current board game
  *
  * NOTE: global variables are usually discouraged (plus encapsulation in
@@ -204,6 +203,8 @@ bool is_end(int* num_player_up, int* num_player_down)
 	return ((perc_up > 50) || (perc_down > 50));
 }
 
+/** Calculates how many new cells will be gained by a given player if
+ * a given color is chosen.*/
 int calc_new_cells(char player, char color)
 {
 	int num_new_cells = 0;
@@ -223,6 +224,7 @@ int calc_new_cells(char player, char color)
 	return num_new_cells;
 }
 
+/** The IA acts accordingly to the best local choice. */
 char IA_greedy()
 {
 	char color, max_color;
@@ -276,8 +278,10 @@ int main(void)
     print_board();
     print_occupation(num_player_up, num_player_down);
     
+    // game loop
 	while (!is_end(num_player_up, num_player_down))
 	{
+		// either gets input from player, or else IA plays
 		switch (player)
 		{
 			case '^':
@@ -296,6 +300,7 @@ int main(void)
 		
 		update_board(player, color_input);
 		
+		// prints the action and the result of the IA
 		if (is_IA_turn)
 		{
 			printf("\nTHE IA HAS CHOSEN THIS COLOR: %c\n", color_input);
