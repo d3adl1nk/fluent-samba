@@ -1,0 +1,3 @@
+open Terminal and run:
+- make : to compile and edit links between files
+- make clean : to clear .o files and the executable
