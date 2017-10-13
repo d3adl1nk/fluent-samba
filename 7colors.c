@@ -27,7 +27,8 @@
  *     For this first assignment, no dinosaure will get you if you do that.
  */
 char board[BOARD_SIZE * BOARD_SIZE] = { 0 }; // Filled with zeros
-
+char board_visited[BOARD_SIZE * BOARD_SIZE] = { 0 }; // Filled with zeros, will be used for the third question !
+  
 /** Retrieves the color of a given board cell */
 char get_cell(int x, int y)
 {
@@ -123,15 +124,65 @@ void update_board(char player, char color_input)
 	}
 }
 
+void update_board_rec(char player, char color_input, int i, int j)
+{
+  if (!(board_visited[i*BOARD_SIZE + j]) && 
+      (get_cell(i,j) == color_input || get_cell(i,j) == player)) 
+    { 
+      set_cell(i, j, player);
+      board_visited[i*BOARD_SIZE + j] = 1;
+      if (is_inb(i+1,j))
+	{
+	  update_board_rec(player, color_input, i+1, j);
+	}
+      if (is_inb (i-1, j))
+	{
+	  update_board_rec(player, color_input, i-1 ,j);
+	}
+      if (is_inb (i, j+1))
+	{
+	  update_board_rec(player, color_input, i, j+1);
+	}
+      if (is_inb (i, j-1))
+	{
+	  update_board_rec(player, color_input, i, j-1);
+	}
+    }
+}
+
+void update_board_optimized(char player, char color_input)
+{
+  int i, j;
+  if (player == '^')
+    {
+      i = 0;
+      j = BOARD_SIZE - 1;
+    }
+  else
+    {
+      i = BOARD_SIZE - 1;
+      j = 0;
+    }
+  int k, l;
+  for (k = 0; k < BOARD_SIZE; k++)
+    {
+      for (l = 0; l < BOARD_SIZE; l++)
+	{
+	  board_visited[k*BOARD_SIZE + l] = 0;  
+	}
+    }
+  update_board_rec(player, color_input, i, j);
+}
+
 /** TEST FUNCTION: iterates sthg on every cell of the board */
-void test_on_board(char player)
+void test_on_board(void)
 {
 	int i, j;
 	for (i = 0; i < BOARD_SIZE; i++)
 	{
 		for (j = 0; j < BOARD_SIZE; j++)
 		{
-			printf("%d ", is_next_to_player(player, i, j));			
+		  printf("%d ", get_cell(i, j));			
 		}
 		printf("\n");
 	}
@@ -204,6 +255,84 @@ bool is_end(int* num_player_up, int* num_player_down)
 	return ((perc_up > 50) || (perc_down > 50));
 }
 
+int calc_new_cells_rec(char player, char color, int i, int j)
+{
+  if (!(board_visited[i*BOARD_SIZE + j]))
+    {
+      if (get_cell(i,j) == color)
+	{
+	  board_visited[i*BOARD_SIZE + j] = 1;
+	  if (is_inb(i+1,j))
+	    {
+	      return (1 + calc_new_cells_rec(player, color, i+1, j));
+	    }
+	  if (is_inb (i-1, j))
+	    {
+	      return (1 + calc_new_cells_rec(player, color, i-1 ,j));
+	    }
+	  if (is_inb (i, j+1))
+	    {
+	      return (1 + calc_new_cells_rec(player, color, i, j+1));
+	    }
+	  if (is_inb (i, j-1))
+	    {
+	      return (1 + calc_new_cells_rec(player, color, i, j-1));
+	    }
+	}
+      else if (get_cell(i,j) == player) 
+	{
+	  board_visited[i*BOARD_SIZE + j] = 1;
+	  if (is_inb(i+1,j))
+	    {
+	      return (calc_new_cells_rec(player, color, i+1, j));
+	    }
+	  if (is_inb (i-1, j))
+	    {
+	      return (calc_new_cells_rec(player, color, i-1 ,j));
+	    }
+	  if (is_inb (i, j+1))
+	    {
+	      return (calc_new_cells_rec(player, color, i, j+1));
+	    }
+	  if (is_inb (i, j-1))
+	    {
+	      return (calc_new_cells_rec(player, color, i, j-1));
+	    }
+	}
+    }
+  else
+    {
+      return (0);
+    }
+  return 0;
+}
+
+int calc_new_cells_optimized(char player, char color)
+{
+    int i, j;
+  if (player == '^')
+    {
+      i = 0;
+      j = BOARD_SIZE - 1;
+    }
+  else
+    {
+      i = BOARD_SIZE - 1;
+      j = 0;
+    }
+  int k, l;
+  for (k = 0; k < BOARD_SIZE; k++)
+    {
+      for (l = 0; l < BOARD_SIZE; l++)
+	{
+	  board_visited[k*BOARD_SIZE + l] = 0;  
+	}
+    }
+  int num = calc_new_cells_rec(player, color, i, j);
+  printf("couleur  %c : %d\n", color,  num);
+  return num;
+}
+
 int calc_new_cells(char player, char color)
 {
 	int num_new_cells = 0;
@@ -219,8 +348,9 @@ int calc_new_cells(char player, char color)
 			}
 		}
 	}
-	
-	return num_new_cells;
+	int num = num_new_cells;
+	printf("couleur %c : %d\n", color, num);
+	return num;
 }
 
 char IA_greedy()
@@ -261,7 +391,9 @@ int main(void)
     printf("\n\nWelcome to the 7 wonders of the world of the 7 colors\n"
 	   "*****************************************************\n\n"
 	   "Current board state:\n");
-	
+
+    test_on_board();
+    
     char color_input;
     char player = '^';
     
@@ -294,7 +426,7 @@ int main(void)
 				printf("\nERROR\n");
 		}			
 		
-		update_board(player, color_input);
+		update_board_optimized(player, color_input);
 		
 		if (is_IA_turn)
 		{
