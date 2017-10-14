@@ -114,3 +114,58 @@ void update_board(board_d* board, char player, char color_input)
 		}
 	}
 }
+
+void update_board_rec(board_d* board, board_d* board_visited, char player, char color_input, int i, int j)
+{
+  if (!(get_cell(board_visited,i,j)) && 
+      ( get_cell(board,i,j) == color_input ||
+	get_cell(board,i,j) == player) ) 
+    { 
+      set_cell(board, i, j, player);
+      set_cell(board_visited, i, j, 1);
+      if (is_inb(i+1,j))
+	{
+	  update_board_rec(board, board_visited, player, color_input, i+1, j);
+	}
+      if (is_inb (i-1, j))
+	{
+	  update_board_rec(board, board_visited, player, color_input, i-1 ,j);
+	}
+      if (is_inb (i, j+1))
+	{
+	  update_board_rec(board, board_visited, player, color_input, i, j+1);
+	}
+      if (is_inb (i, j-1))
+	{
+	  update_board_rec(board, board_visited, player, color_input, i, j-1);
+	}
+    }
+}
+
+void update_board_optimized(board_d* board, char player, char color_input)
+{
+  int i, j;
+  board_d* board_visited = board_create(); 
+  if (player == '^')
+    {
+      i = 0;
+      j = BOARD_SIZE - 1;
+    }
+  else
+    {
+      i = BOARD_SIZE - 1;
+      j = 0;
+    }
+  int k, l;
+  for (k = 0; k < BOARD_SIZE; k++)
+    {
+      for (l = 0; l < BOARD_SIZE; l++)
+	{
+	  set_cell(board_visited, k, l, 0);  
+	}
+    }
+  update_board_rec(board, board_visited, player, color_input, i, j);
+  board_free(board_visited);
+}
+
+
