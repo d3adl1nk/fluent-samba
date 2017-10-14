@@ -154,70 +154,70 @@ bool is_end(board_d* board)
   int perc_up = 100 * get_num_cells_up(board) / (BOARD_SIZE*BOARD_SIZE);
   int perc_down = 100 * get_num_cells_down(board) / (BOARD_SIZE*BOARD_SIZE);
 	
-	return ((perc_up > 50) || (perc_down > 50));
+  return ((perc_up > 50) || (perc_down > 50));
 }
 
 /**Given a player, returns the other one*/
 char change_player(char curr_player)
 {
-	return (curr_player == '^') ? 'v' : '^';
+  return (curr_player == '^') ? 'v' : '^';
 }
 
 /** Program entry point */
 int main(void)
 {
-    printf("\n\nWelcome to the 7 wonders of the world of the 7 colors\n"
-	   "*****************************************************\n\n"
-	   "Current board state:\n");
+  printf("\n\nWelcome to the 7 wonders of the world of the 7 colors\n"
+	 "*****************************************************\n\n"
+	 "Current board state:\n");
     
-    char color_input;
-    char player = '^';
-    
-    board_d* board;
-    board = board_create();
-	
-	bool is_IA_turn = false;
-	
-	rand_board(board);
-    print_board(board);
-    print_occupation(board);
-    
-	while (!is_end(board))
+  char color_input;
+  char player = '^';
+  
+  board_d* board;
+  board = board_create();
+  
+  bool is_IA_turn = false;
+  
+  rand_board(board);
+  print_board(board);
+  print_occupation(board);
+  
+  while (!is_end(board))
+    {
+      switch (player)
 	{
-		switch (player)
-		{
-			case '^':
-				color_input = player_input();
-				is_IA_turn = false;
-				break;
-			
-			case 'v':
-				color_input = IA_greedy(board);
-				is_IA_turn = true;
-				break;
-				
-			default:
-				printf("\nERROR\n");
-		}			
-		
-		update_board_optimized(board, player, color_input);
-		
-		if (is_IA_turn)
-		{
-			printf("\nTHE IA HAS CHOSEN THIS COLOR: %c\n", color_input);
+	case '^':
+	  color_input = player_input();
+	  is_IA_turn = false;
+	  break;
+	  
+	case 'v':
+	  color_input = IA_greedy(board);
+	  is_IA_turn = true;
+	  break;
+	  
+	default:
+	  printf("\nERROR\n");
+	}			
+      
+      update_board_optimized(board, player, color_input);
+      
+      if (is_IA_turn)
+	{
+	  printf("\nTHE IA HAS CHOSEN THIS COLOR: %c\n", color_input);
 			print_board(board);
-		}
-		
-		/* update_num_cells(board, player); */
-		printf("occupation:");
-		print_occupation(board);
-		
-		player = change_player(player);
 	}
-	
-	print_board(board);
-	
-	//free(board);
-
-    return 0; // Everything went well
+      
+      /* update_num_cells(board, player); */
+      printf("occupation:");
+      print_occupation(board);
+      
+      player = change_player(player);
+    }
+  
+  print_board(board);
+  
+  //free(board);
+  
+  return 0; // Everything went well
 }
