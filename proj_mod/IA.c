@@ -94,7 +94,7 @@ int calc_new_cells_optimized(board_d* board, char player, char color)
 }
 
 
-char IA_greedy(board_d* board)
+char IA_greedy(board_d* board, char player)
 {
   char color, max_color;
   int temp_cells;
@@ -102,7 +102,7 @@ char IA_greedy(board_d* board)
   
   for (color = 65; color < 72; color++)
     {
-      temp_cells = calc_new_cells_optimized(board, 'v', color);
+      temp_cells = calc_new_cells_optimized(board, player, color);
       if (temp_cells > max_cells)
 	{
 	  max_cells = temp_cells;
