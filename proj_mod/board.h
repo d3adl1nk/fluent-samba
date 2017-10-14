@@ -30,6 +30,8 @@ void print_board(board_d* board);
 void rand_board(board_d* board);
 
 void update_board(board_d* board, char player, char color_input);
+void update_board_rec(board_d* board, board_d* board_visited, char player, char color_input, int i, int j);
+void update_board_optimized(board_d* board, char player, char color_input);
 
 bool is_inb(int x, int y);
 bool is_next_to_player(board_d* board, char player, int x, int y);
