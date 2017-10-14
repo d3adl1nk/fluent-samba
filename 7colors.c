@@ -19,7 +19,6 @@
 #define BOARD_SIZE 30
 
 
-
 /** Represent the actual current board game
  *
  * NOTE: global variables are usually discouraged (plus encapsulation in
