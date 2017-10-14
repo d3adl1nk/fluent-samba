@@ -23,6 +23,8 @@ board_d* board_create(void);
 void board_free(board_d* board);
 
 char get_cell(board_d* board, int x, int y);
+int get_num_cells_up(board_d* board);
+int get_num_cells_down(board_d* board);
 void set_cell(board_d* board, int x, int y, char color);
 
 void print_board(board_d* board);

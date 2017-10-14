@@ -26,6 +26,16 @@ char get_cell(board_d* board, int x, int y)
     return (*board).cells[y * BOARD_SIZE + x];
 }
 
+int get_num_cells_up(board_d* board)
+{
+  return (*board).num_cells_up;
+}
+
+int get_num_cells_down(board_d* board)
+{
+  return (*board).num_cells_down;
+}
+
 /** Changes the color of a given board cell */
 void set_cell(board_d* board, int x, int y, char color)
 {
