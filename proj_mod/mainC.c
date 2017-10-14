@@ -200,7 +200,7 @@ int main(void)
 				printf("\nERROR\n");
 		}			
 		
-		update_board(board, player, color_input);
+		update_board_optimized(board, player, color_input);
 		
 		if (is_IA_turn)
 		{
