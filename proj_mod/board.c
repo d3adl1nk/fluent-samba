@@ -9,8 +9,8 @@ board_d* board_create(void)
 	//board_d* board = &init_board;
 	
 	board_d* board = malloc(sizeof(board_d));
-	(*board).num_cells_up = 1;
-	(*board).num_cells_down = 1;
+	(*board).num_cells_up = 0;
+	(*board).num_cells_down = 0;
 	
 	return board;
 }
@@ -29,7 +29,25 @@ char get_cell(board_d* board, int x, int y)
 /** Changes the color of a given board cell */
 void set_cell(board_d* board, int x, int y, char color)
 {
-    (*board).cells[y * BOARD_SIZE + x] = color;
+  if (get_cell(board, x, y) == 'v')
+    {
+      (*board).num_cells_down -= 1;
+    }
+  if (get_cell(board, x, y) == '^')
+    {
+      (*board).num_cells_up -= 1;
+    }
+  
+  (*board).cells[y * BOARD_SIZE + x] = color;
+  if (color == 'v')
+    {
+      (*board).num_cells_down += 1;
+    }
+  if (color == '^')
+    {
+      (*board).num_cells_up += 1;
+    }
+  
 }
 
 /** Prints the current state of the board on screen
