@@ -119,3 +119,20 @@ char IA_random(void)
 	char rand_color = 65 + (rand() % 7);
 	return rand_color;
 }
+
+int border(board_d* board, char player)
+{
+  int i ,j;
+  int num = 0;
+  for (i=0; i< BOARD_SIZE; i++)
+    {
+      for (j=0; j< BOARD_SIZE; j++)
+	{
+	  if (is_next_to_player(board, player, j, i))
+	    {
+	      num++;
+	    }
+	}
+    }
+  return num;
+}
