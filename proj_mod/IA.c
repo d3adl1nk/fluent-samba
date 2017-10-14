@@ -135,3 +135,34 @@ int border(board_d* board, char player)
     }
   return num;
 }
+
+
+char IA_greedy_border(board_d* board, char player)
+{
+  int max_edge_num_cells = 0;
+  char color_max;
+  int i, j;
+  char color = 'A';
+  while (color < 72)
+    {
+      board_d* board_copy = board_create();
+      for (i=0; i<BOARD_SIZE; i++)
+	{
+	  for (j=0; j<BOARD_SIZE; j++)
+	    {
+	      set_cell(board_copy, i, j, (get_cell(board, i,j)));
+	    }
+	}
+      update_board_optimized(board_copy, player, color);
+      int edge_num_cells = border(board_copy, player);
+      if (edge_num_cells > max_edge_num_cells)
+	{
+	  color_max = color;
+	  max_edge_num_cells = edge_num_cells;
+	}
+      board_free(board_copy);
+      color ++;
+    }
+  return color_max;
+}
+
