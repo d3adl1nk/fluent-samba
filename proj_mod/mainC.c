@@ -109,40 +109,40 @@ char player_input(void)
 	return color_input;
 }
 
-/** Updates the number of cells each player owns */
-void update_num_cells(board_d* board, char player)
-{
-	if (player == '^')
-	{
-		(*board).num_cells_up = 0;
-	}
-	else if (player == 'v')
-	{
-		(*board).num_cells_down = 0;
-	}
+/* Updates the number of cells each player owns */
+/* void update_num_cells(board_d* board, char player) */
+/* { */
+/* 	if (player == '^') */
+/* 	{ */
+/* 		(*board).num_cells_up = 0; */
+/* 	} */
+/* 	else if (player == 'v') */
+/* 	{ */
+/* 		(*board).num_cells_down = 0; */
+/* 	} */
 	
-	int i, j;
-	for (i = 0; i < BOARD_SIZE; i++)
-	{
-		for (j = 0; j < BOARD_SIZE; j++)
-		{
-			if ((player == '^') && (get_cell(board, i, j) == '^'))
-			{
-				(*board).num_cells_up++;
-			}
-			else if ((player == 'v') && (get_cell(board, i, j) == 'v'))
-			{
-				(*board).num_cells_down++;
-			}
-		}
-	}
-}
+/* 	int i, j; */
+/* 	for (i = 0; i < BOARD_SIZE; i++) */
+/* 	{ */
+/* 		for (j = 0; j < BOARD_SIZE; j++) */
+/* 		{ */
+/* 			if ((player == '^') && (get_cell(board, i, j) == '^')) */
+/* 			{ */
+/* 				(*board).num_cells_up++; */
+/* 			} */
+/* 			else if ((player == 'v') && (get_cell(board, i, j) == 'v')) */
+/* 			{ */
+/* 				(*board).num_cells_down++; */
+/* 			} */
+/* 		} */
+/* 	} */
+/* } */
 
 /** Prints the percentage of the board each player owns */
 void print_occupation(board_d* board)
 {
-	int perc_up = 100 * (*board).num_cells_up / (BOARD_SIZE*BOARD_SIZE);
-	int perc_down = 100 * (*board).num_cells_down / (BOARD_SIZE*BOARD_SIZE);
+  int perc_up = 100 * get_num_cells_up(board) / (BOARD_SIZE*BOARD_SIZE);
+  int perc_down = 100 * get_num_cells_down(board) / (BOARD_SIZE*BOARD_SIZE);
 
 	printf("PLAYER ^: %d\nPLAYER v: %d\n", perc_up, perc_down);
 	printf("###########################################################\n");
@@ -151,8 +151,8 @@ void print_occupation(board_d* board)
 /** Checks if the victory condition is met */
 bool is_end(board_d* board)
 {	
-	int perc_up = 100 * (*board).num_cells_up / (BOARD_SIZE*BOARD_SIZE);
-	int perc_down = 100 * (*board).num_cells_down / (BOARD_SIZE*BOARD_SIZE);
+  int perc_up = 100 * get_num_cells_up(board) / (BOARD_SIZE*BOARD_SIZE);
+  int perc_down = 100 * get_num_cells_down(board) / (BOARD_SIZE*BOARD_SIZE);
 	
 	return ((perc_up > 50) || (perc_down > 50));
 }
@@ -208,7 +208,8 @@ int main(void)
 			print_board(board);
 		}
 		
-		update_num_cells(board, player);
+		/* update_num_cells(board, player); */
+		printf("occupation:");
 		print_occupation(board);
 		
 		player = change_player(player);
