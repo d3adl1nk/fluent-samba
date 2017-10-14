@@ -166,3 +166,40 @@ char IA_greedy_border(board_d* board, char player)
   return color_max;
 }
 
+char IA_foresighted_greedy(board_d* board, char player)
+{
+  char color_max;
+  int max_expension = 0; 
+  char fst_color;
+  for (fst_color = 'A'; fst_color < 72; fst_color++)
+    {
+      board_d* board_copy = board_create();
+      int i, j;
+      for (i=0; i<BOARD_SIZE; i++)
+	{
+	  for (j=0; j<BOARD_SIZE; j++)
+	    {
+	      set_cell(board_copy, i, j, (get_cell(board, i,j)));
+	    }
+	}
+      int fst_expension = calc_new_cells_optimized(board_copy, player, fst_color);
+      int max_scd_expension = 0;
+      update_board_optimized(board_copy, player, fst_color);
+      char scd_color;
+      for (scd_color = 'A'; scd_color < 72; scd_color++)
+	{
+	  int scd_expension = calc_new_cells_optimized(board_copy, player, scd_color);
+	  if (scd_expension > max_scd_expension)
+	    {
+	      max_scd_expension = scd_expension;
+	    }
+	}
+      board_free(board_copy);
+      if (fst_expension + max_scd_expension > max_expension)
+	{
+	  max_expension = fst_expension + max_scd_expension;
+	  color_max = fst_color;
+	}
+    }
+  return color_max;
+}

@@ -192,7 +192,7 @@ int main(void)
 	  break;
 	  
 	case 'v':
-	  color_input = IA_greedy_border(board, player);
+	  color_input = IA_foresighted_greedy(board, player);
 	  is_IA_turn = true;
 	  break;
 	  

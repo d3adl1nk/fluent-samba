@@ -11,4 +11,5 @@ char IA_random(void);
 int border(board_d* board, char player);
 char IA_greedy_border(board_d* board, char player);
 
+char IA_foresighted_greedy(board_d* board, char player);
 #endif /* IA_H */
