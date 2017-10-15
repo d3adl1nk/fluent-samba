@@ -1,4 +1,4 @@
-% Created 2017-10-15 dim. 17:11
+% Created 2017-10-15 dim. 20:46
 \documentclass[12pt,a4paper,twoside]{article}
  \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -36,12 +36,12 @@
 
 \usepackage{minted}
 \setcounter{secnumdepth}{4}
-\author{Clément Legrand}
+\author{Marco Freire et Clément Legrand}
 \date{2017}
-\title{Rapport}
+\title{Rapport du projet 7 colors}
 \hypersetup{
- pdfauthor={Clément Legrand},
- pdftitle={Rapport},
+ pdfauthor={Marco Freire et Clément Legrand},
+ pdftitle={Rapport du projet 7 colors},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 24.5.1 (Org mode 8.3.4)}, 
@@ -74,9 +74,9 @@
 \pagenumbering{arabic}
 
 \begin{center}
-\bgroup\bf \LARGE Rapport\egroup\medskip
+\bgroup\bf \LARGE Rapport du projet 7 colors\egroup\medskip
 
-\large Clément Legrand \smallskip
+\large Marco Freire et Clément Legrand \smallskip
 
 \normalsize L3 Info ENS, 2017/2018
 \end{center}
@@ -91,8 +91,10 @@ joueur chosit à son tour une couleur, et conquiert toute case de
 cette couleur adjacente à la zone qu'il posséde.
 
 \section{Réponses aux questions}
-\label{sec:orgheadline3}
-\subsection{Question 1}
+\label{sec:orgheadline25}
+\subsection{Voir le monde en sept couleurs}
+\label{sec:orgheadline9}
+\subsubsection*{Question 1}
 \label{sec:orgheadline2}
 Il convient tout d'abord de créer un type \texttt{boardd} afin
 d'encapsuler un peu le code et de ne pas modifier le pateau de jeu
@@ -100,17 +102,133 @@ n'importe comment. Ce type contient un tableau de char de taille
 \(\texttt{BOARDSIZE} ^{2}\), ainsi que deux entiers:
 \texttt{numcellsup} et \texttt{numcellsdown} indiquant le nombre de
 cases possédées par le joueur \^{} et le joueur v respectivement.
+Afin de maintenir cette structure, nous avons implémenté les
+méthodes \texttt{getcell}, \texttt{getnumcellsup},
+\texttt{getnumcellsup}, \texttt{setcell}, ainsi que
+\texttt{boardcreate}\} et \texttt{boardfree}, allouant un tableau de
+la bonne taille, et le libérant respectivement. 
 
-\section{Conclusion}
+\subsubsection*{Question 2}
+\label{sec:orgheadline5}
+\paragraph*{Complexité dans le pire cas :}
+\label{sec:orgheadline3}
+Dans le pire des cas, à chaque itération, l'algorithme met à jour une
+et une seule case. Posons \(n = BOARDSIZE\). Étant donné qu'il y a \(n^{2}\)
+cases dans le tableau, au plus \(n^{2}\) passages sont effectués. Lors d'un
+passage, \(n^{2}\) cases sont examinées, chacune d'elles en un temps
+contant. La complexité dans le pire cas de cet algorithme est donc un
+\(O(n^4)\).
+Cette borne est réellement atteinte: par exemple si une couleur forme
+une spirale rectangulaire jusqu'au centre. La complexité est donc un
+\(\Theta(n^{2})\). 
+\paragraph*{Complexité amortie :}
 \label{sec:orgheadline4}
+Le cas énoncé précédemment est assez pathologique et ne peut se
+produire trop souvent. L'analyse de la complexité amortie est donc
+pertinente.
+\subsubsection*{Question 3 (bonus)}
+\label{sec:orgheadline8}
+\paragraph*{Principe de l'algorithme implémenté :}
+\label{sec:orgheadline6}
+Plutôt que d'effectuer des parcours entier du tableau en vérifiant si
+les cases ont besoin d'être mises à jour, il est préférable de se
+représenter la zone conquise pas un joueur comme un graphe (non
+orienté), dont les sommets sont les toutes les cases du tableau et les
+arêtes lient chacune des cases conquises par le joueur aux quatre
+cases adjacentes sur le plateau. Il suffit alors d'effectuer un
+parcours de ce graphe en le mettant a jour progressivement. 
+
+Nous créons pour cela un second tableau \texttt{boardvisited}, de
+mêmes dimensions, dont les cases indiquent si le sommet \((i,j)\) a été
+visité ou pas. Nous parcourons ensuite récursivement le graphe est
+commençant par la case du coin, qui appartient forcement au joueur. À
+chaque sommet visité, nous le marquons comme tel dans
+\texttt{boardvisited}, et s'il est de la bonne couleur ou appartient au
+joueur courant, nous marquons la case celle du joueur dans
+\texttt{board} et explorons ses voisines non visitées.
+\paragraph*{Complexité dans le pire des cas :}
+\label{sec:orgheadline7}
+Chaque case du tableau est visité un nombre fini borné de fois (au
+plus quatre dans notre implémentation), donc l'algorithme est un
+\(O(n^{2})\). 
+Là encore, cette borne peut être atteinte si tout le tableau
+est de la même couleur. La complexité est donc un \(\Theta(n^{2})\).
+\subsection{À la conquête du monde}
+\label{sec:orgheadline12}
+\subsubsection*{Question 4}
+\label{sec:orgheadline10}
+\subsubsection*{Question 5}
+\label{sec:orgheadline11}
+La partie peut s'arrêter si l'un des joueurs au moins détient plus de
+la moitié du plateau de jeu. Nous avons donc recours aux attributs
+\texttt{numcellsup} et \texttt{numcellsdown} du type \texttt{boardd},
+afin de savoir si ceux ci excèdent la moitié du nombre de cases total.
+
+\subsection{La stratégie de l'aléa}
+\label{sec:orgheadline15}
+\subsubsection*{Question 6}
+\label{sec:orgheadline13}
+\subsubsection*{Question 7}
+\label{sec:orgheadline14}
+\subsection{La loi du plus fort}
+\label{sec:orgheadline19}
+\subsubsection*{Question 8}
+\label{sec:orgheadline16}
+Nous allons pour cela reprendre et modifier légèrement la fonction
+\texttt{updateboardoptimized} impémentée pour la question 3, mais en
+comptant le nombre de cases modifiables en jouant une couleur donnée au
+lieu de les modifier. Nous effectuons ensuite le choix maximisant ce
+nombre de cases.
+\subsubsection*{Question 9}
+\label{sec:orgheadline17}
+Pour que le combat soit "équitable", le mieux est de faire s'affronter
+les deux joueurs artificiels sur un plateau donné, puis d'effectuer
+l'affrontement à nouveau, mais en échangeant les positions de départ.
+\subsubsection*{Question 10}
+\label{sec:orgheadline18}
+\subsection{Les nombreuses huitièmes merveilles du monde (bonus)}
+\label{sec:orgheadline22}
+\subsubsection*{Question 11}
+\label{sec:orgheadline20}
+Il apparaît facilement qu'en effectuant un parcours entier du plateau
+et en comptant les cases ayant parmi leurs voisines, un appartenant au
+joueur courant, il est possible d'obtenir le périmètre de la zone
+détenue par le joueur en \(\Theta(n^{2})\). Il suffit dés lors, pour chaque
+couleur possible, de créer une copie du plateau, d'effectuer sur celle
+ci une mise à jour en jouant ladite couleur, et de compter le
+périmètre correspondant.
+La complexité de cet algorithme est donc un \(\Theta(n^{2})\).
+\subsubsection*{Question 12}
+\label{sec:orgheadline21}
+Une des manières d'implémenter le glouton prévoyant est d'effectuer
+pour chacune des couleurs une copie du plateau de jeu, puis de
+modifier celui ci en jouant cette couleur, en comptant le nombre de
+cases ainsi gagnés. Puis d'utiliser la fonction de la question 8 pour
+chacune des couleurs afin d'obtenir le nombre maximal de cases gagnées
+en ayant fixé le premier coup. On choisit ensuite le premier coup afin
+de maximiser ce nombre.  Cet algorithme effectue 7 copies du plateau
+en \(\Theta(n^{2})\), fait sept appels à \texttt{updateboardoptimized} en
+\(\Theta(n^{2})\) et fait appel 49 fois à la fonction
+\texttt{calcnewcellsoptimized} qui s'exécute en \(\Theta(n^{2})\). Il s'exécute
+donc en \(\Theta(n^{2})\).
+Si on veut explorer \(m\) coups consécutifs, cette complexité passe à un
+\(\Theta(\exp(m)*n^{2})\), car il faut alors effectuer 7 fois plus de copies du
+tableau pour chaque coup additionnel (sauf le dernier ou il est possible
+d'utiliser \texttt{calcnewcellsoptimized}).
+\subsection{Le pire du monde merveilleux des sept couleurs (bonus)}
+\label{sec:orgheadline24}
+\subsubsection*{Question 13}
+\label{sec:orgheadline23}
+\section{Conclusion}
+\label{sec:orgheadline26}
 \label{sec:conclusion}
 blabla
 \clearpage\appendix
 
 \section{Annexe}
-\label{sec:orgheadline6}
+\label{sec:orgheadline28}
 \subsection{Bibliographie}
-\label{sec:orgheadline5}
+\label{sec:orgheadline27}
 Ne sont cités ici que les ouvrages et sites dont je me suis le plus
 servi.
 

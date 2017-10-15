@@ -75,12 +75,15 @@
    \normalsize L3 Info ENS, 2017/2018
 #+END_CENTER
 
-* TODO À faire [0/2]						   :noexport:
+* TODO À faire [0/6]                                               :noexport:
   - [ ] finir de répondre question 1
   - [ ] trouver comment afficher avec \ texttt des noms comportant un
     _
   - [ ] comprendre comment supprimer l'intégralité d'un objet de type
     boardd, pas juste les cases
+  - [ ] calcul de la complexité amortie pour la question 2.
+  - [ ] Question 4
+  - [ ] régler la bibliographie
 * Raccourcis claviers   :noexport:
 ** Emacs
    | Raccourci | Commande                     |
@@ -121,7 +124,8 @@ http://www.tuteurs.ens.fr/unix/editeurs/emacs_memo.html#s5
   cette couleur adjacente à la zone qu'il posséde.
 
 * Réponses aux questions
-** Question 1
+** Voir le monde en sept couleurs
+*** Question 1
    Il convient tout d'abord de créer un type \texttt{boardd} afin
    d'encapsuler un peu le code et de ne pas modifier le pateau de jeu
    n'importe comment. Ce type contient un tableau de char de taille
@@ -134,7 +138,80 @@ http://www.tuteurs.ens.fr/unix/editeurs/emacs_memo.html#s5
    \texttt{boardcreate}} et \texttt{boardfree}, allouant un tableau de
    la bonne taille, et le libérant respectivement. 
 
-   
+*** Question 2   
+**** Complexité dans le pire cas :
+Dans le pire des cas, à chaque itération, l'algorithme met à jour une
+et une seule case. Posons $n = BOARDSIZE$. Étant donné qu'il y a $n^{2}$
+cases dans le tableau, au plus $n^{2}$ passages sont effectués. Lors d'un
+passage, $n^{2}$ cases sont examinées, chacune d'elles en un temps
+contant. La complexité dans le pire cas de cet algorithme est donc un
+$O(n^4)$.
+Cette borne est réellement atteinte: par exemple si une couleur forme
+une spirale rectangulaire jusqu'au centre. La complexité est donc un
+$\Theta(n^{2})$. 
+**** Complexité amortie :
+Le cas énoncé précédemment est assez pathologique et ne peut se
+produire trop souvent. L'analyse de la complexité amortie est donc
+pertinente.
+*** Question 3 (bonus)
+**** Principe de l'algorithme implémenté :
+Plutôt que d'effectuer des parcours entier du tableau en vérifiant si
+les cases ont besoin d'être mises à jour, il est préférable de se
+représenter la zone conquise pas un joueur comme un graphe (non
+orienté), dont les sommets sont les toutes les cases du tableau et les
+arêtes lient chacune des cases conquises par le joueur aux quatre
+cases adjacentes sur le plateau. Il suffit alors d'effectuer un
+parcours de ce graphe en le mettant a jour progressivement. 
+
+Nous créons pour cela un second tableau \texttt{boardvisited}, de
+mêmes dimensions, dont les cases indiquent si le sommet $(i,j)$ a été
+visité ou pas. Nous parcourons ensuite récursivement le graphe est
+commençant par la case du coin, qui appartient forcement au joueur. À
+chaque sommet visité, nous le marquons comme tel dans
+\texttt{boardvisited}, et s'il est de la bonne couleur ou appartient au
+joueur courant, nous marquons la case celle du joueur dans
+\texttt{board} et explorons ses voisines non visitées.
+**** Complexité dans le pire des cas :
+Chaque case du tableau est visité un nombre fini borné de fois (au
+plus quatre dans notre implémentation), donc l'algorithme est un
+$O(n^{2})$. 
+Là encore, cette borne peut être atteinte si tout le tableau
+est de la même couleur. La complexité est donc un $\Theta(n^{2})$.
+** À la conquête du monde
+*** Question 4
+*** Question 5
+La partie peut s'arrêter si l'un des joueurs au moins détient plus de
+la moitié du plateau de jeu. Nous avons donc recours aux attributs
+\texttt{numcellsup} et \texttt{numcellsdown} du type \texttt{boardd},
+afin de savoir si ceux ci excèdent la moitié du nombre de cases total.
+
+** La stratégie de l'aléa
+*** Question 6
+*** Question 7
+** La loi du plus fort
+*** Question 8
+Nous allons pour cela reprendre et modifier légèrement la fonction
+\texttt{updateboardoptimized} impémentée pour la question 3, mais en
+comptant le nombre de cases modifiables en jouant une couleur donnée au
+lieu de les modifier. Nous effectuons ensuite le choix maximisant ce
+nombre de cases.
+*** Question 9
+Pour que le combat soit "équitable", le mieux est de faire s'affronter
+les deux joueurs artificiels sur un plateau donné, puis d'effectuer
+l'affrontement à nouveau, mais en échangeant les positions de départ.
+*** Question 10
+** Les nombreuses huitièmes merveilles du monde (bonus)
+*** Question 11
+Il apparaît facilement qu'en effectuant un parcours entier du plateau
+et en comptant les cases ayant parmi leurs voisines, un appartenant au
+joueur courant, il est possible d'obtenir le périmètre de la zone
+détenue par le joueur en $\Theta(n^{2})$. Il suffit dés lors, pour chaque
+couleur possible, de créer une copie du plateau, d'effectuer sur celle
+ci une mise à jour en jouant ladite couleur, et de compter le
+périmètre correspondant.
+La complexité de cet algorithme est donc un $\Theta(n^{2})$.
+*** Question 12
+
 * Conclusion
 #+LaTeX: \label{sec:conclusion}
 blabla
