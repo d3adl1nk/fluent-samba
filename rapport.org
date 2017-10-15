@@ -76,7 +76,7 @@
 #+END_CENTER
 
 * TODO À faire [0/12]                                              :noexport:
-  - [ ] completer l'introduction 
+  - [ ] compléter l'introduction 
   - [ ] finir de répondre question 1
   - [ ] trouver comment afficher avec \ texttt des noms comportant un
     _
@@ -123,17 +123,17 @@ http://www.tuteurs.ens.fr/unix/editeurs/emacs_memo.html#s5
 
 * Introduction
   Seven colors est un jeu d'ordinateur inventé par Dmitry Pashkov,
-  dévellopé en 1991. Le principe est simple: deux joueurs essayent de
-  conquérir la plus grande surface d'un terrain de jeu consistué de
+  développé en 1991. Le principe est simple: deux joueurs essayent de
+  conquérir la plus grande surface d'un terrain de jeu constitué de
   cases juxtaposées, de sept couleurs différentes. Pour cela, chaque
-  joueur chosit à son tour une couleur, et conquiert toute case de
-  cette couleur adjacente à la zone qu'il posséde.
+  joueur choisit à son tour une couleur, et conquiert toute case de
+  cette couleur adjacente à la zone qu'il possède.
 
 * Réponses aux questions
 ** Voir le monde en sept couleurs
 *** Question 1
    Il convient tout d'abord de créer un type \texttt{boardd} afin
-   d'encapsuler un peu le code et de ne pas modifier le pateau de jeu
+   d'encapsuler un peu le code et de ne pas modifier le plateau de jeu
    n'importe comment. Ce type contient un tableau de char de taille
    $ \texttt{BOARDSIZE} ^{2}$, ainsi que deux entiers:
    \texttt{numcellsup} et \texttt{numcellsdown} indiquant le nombre de
@@ -236,7 +236,7 @@ d'utiliser \texttt{calcnewcellsoptimized}).
 *** Question 13
 * Conclusion
 #+LaTeX: \label{sec:conclusion}
-blabla
+
 #+LaTeX: \clearpage\appendix
 
 * Annexe
