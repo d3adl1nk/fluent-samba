@@ -1,0 +1,122 @@
+% Created 2017-10-15 dim. 17:11
+\documentclass[12pt,a4paper,twoside]{article}
+ \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,gensymb,mathtools}
+\usepackage{xspace}
+\usepackage[paper=a4paper,textwidth=6.6in,top=38mm,bottom=38mm]{geometry} % ,left=20mm,right=20mm, ,headsep=0pt
+%\usepackage{a4wide}
+\usepackage{palatino}
+\usepackage{verbments}
+\plset{numbers=left,numbersep=5pt,texcl=true,style=tango,bgcolor=Moccasin,fontsize=\small}
+\usepackage{xcolor}
+\usepackage{todonotes}
+\usepackage{color}
+\usepackage[normalem]{ulem}
+\usepackage{fancyhdr}
+\AtBeginDocument{
+\definecolor{pdfurlcolor}{rgb}{0,0,0.6}
+\definecolor{pdfcitecolor}{rgb}{0,0.6,0}
+\definecolor{pdflinkcolor}{rgb}{0.6,0,0}
+\definecolor{light}{gray}{.85}
+\definecolor{vlight}{gray}{.95}
+\selectlanguage{francais}
+}
+\usepackage{url} \urlstyle{sf}
+\usepackage[francais, english]{babel}
+\selectlanguage{francais}
+\let\oldmaketitle=\maketitle
+\def\maketitle{}
+\usepackage[colorlinks=true,citecolor=pdfcitecolor,urlcolor=pdfurlcolor,linkcolor=pdflinkcolor,pdfborder={0 0 0}]{hyperref}
+\pagestyle{fancy}\fancyhead{}\fancyfoot{}
+\usepackage{subfigure}
+%\usepackage[nomarkers,figuresonly]{endfloat}\renewcommand{\efloatseparator}{\mbox{}}
+
+
+
+\usepackage{minted}
+\setcounter{secnumdepth}{4}
+\author{Clément Legrand}
+\date{2017}
+\title{Rapport}
+\hypersetup{
+ pdfauthor={Clément Legrand},
+ pdftitle={Rapport},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 8.3.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\renewcommand{\v}[1]{\ensuremath{\overrightarrow{#1}}\xspace}
+\let\oldcite=\cite
+\def\cite#1{~\oldcite{#1}\xspace}
+\let\oldref=\ref
+\def\ref#1{~\oldref{#1}\xspace}
+\let\oldeqref=\eqref
+\def\eqref#1{~\oldeqref{#1}\xspace}
+\let\leq=\leqslant
+\let\geq=\geqslant
+\let\le=\leqslant
+\let\ge=\geqslant
+\def\R{\ensuremath{\mathbb{R}}\xspace}
+\pagestyle{empty} 
+\pagenumbering{gobble}
+\let\maketitle=\oldmaketitle
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\rhead[\sffamily\itshape \MakeUppercase{Rapport}]{\thepage}
+\lhead[\thepage]{\sffamily\itshape \leftmark}
+\pagenumbering{roman}
+\pagenumbering{arabic}
+
+\begin{center}
+\bgroup\bf \LARGE Rapport\egroup\medskip
+
+\large Clément Legrand \smallskip
+
+\normalsize L3 Info ENS, 2017/2018
+\end{center}
+
+\section{Introduction}
+\label{sec:orgheadline1}
+Seven colors est un jeu d'ordinateur inventé par Dmitry Pashkov,
+dévellopé en 1991. Le principe est simple: deux joueurs essayent de
+conquérir la plus grande surface d'un terrain de jeu consistué de
+cases juxtaposées, de sept couleurs différentes. Pour cela, chaque
+joueur chosit à son tour une couleur, et conquiert toute case de
+cette couleur adjacente à la zone qu'il posséde.
+
+\section{Réponses aux questions}
+\label{sec:orgheadline3}
+\subsection{Question 1}
+\label{sec:orgheadline2}
+Il convient tout d'abord de créer un type \texttt{boardd} afin
+d'encapsuler un peu le code et de ne pas modifier le pateau de jeu
+n'importe comment. Ce type contient un tableau de char de taille
+\(\texttt{BOARDSIZE} ^{2}\), ainsi que deux entiers:
+\texttt{numcellsup} et \texttt{numcellsdown} indiquant le nombre de
+cases possédées par le joueur \^{} et le joueur v respectivement.
+
+\section{Conclusion}
+\label{sec:orgheadline4}
+\label{sec:conclusion}
+blabla
+\clearpage\appendix
+
+\section{Annexe}
+\label{sec:orgheadline6}
+\subsection{Bibliographie}
+\label{sec:orgheadline5}
+Ne sont cités ici que les ouvrages et sites dont je me suis le plus
+servi.
+
+\def\section*#1{}
+\bibliographystyle{abbrv-fr}
+\nocite{*}
+\bibliography{biblio.bib}
+\clearpage
+\end{document}
