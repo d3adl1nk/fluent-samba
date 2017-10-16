@@ -2,54 +2,13 @@
 \expandafter\ifx\csname fonteauteurs\endcsname\relax
 \def\fonteauteurs{\scshape}\fi
 
-\bibitem{BM02b}
-V.~\bgroup\fonteauteurs\bgroup Bos\egroup\egroup{} et
-  S.~\bgroup\fonteauteurs\bgroup Mauw\egroup\egroup{} :
-\newblock {\em A {\LaTeX{}} macro package for Message Sequence
-  Charts---Maintenance document---Describing {\mscpack} version~{\mscversion}},
-  June 2002.
-\newblock Included in MSC macro package distribution.
-
-\bibitem{BM02}
-V.~\bgroup\fonteauteurs\bgroup Bos\egroup\egroup{} et
-  S.~\bgroup\fonteauteurs\bgroup Mauw\egroup\egroup{} :
-\newblock {\em A {\LaTeX{}} macro package for Message Sequence
-  Charts---Reference Manual---Describing {\mscpack} version~{\mscversion}},
-  June 2002.
-\newblock Included in MSC macro package distribution.
-
-\bibitem{BM02a}
-V.~\bgroup\fonteauteurs\bgroup Bos\egroup\egroup{} et
-  S.~\bgroup\fonteauteurs\bgroup Mauw\egroup\egroup{} :
-\newblock {\em A {\LaTeX{}} macro package for Message Sequence Charts---User
-  Manual---Describing {\mscpack} version~{\mscversion}}, June 2002.
-\newblock Included in MSC macro package distribution.
-
-\bibitem{GSM97}
-M.~\bgroup\fonteauteurs\bgroup Goossens\egroup\egroup{},
-  S.~\bgroup\fonteauteurs\bgroup Rahtz\egroup\egroup{} et
-  F.~\bgroup\fonteauteurs\bgroup Mittelbach\egroup\egroup{} :
-\newblock {\em {T}he {\LaTeX} {G}raphics {C}ompanion}.
-\newblock Addison-Wesley, 1997.
-
-\bibitem{z120}
-\bgroup\fonteauteurs\bgroup ITU-TS\egroup\egroup{} :
-\newblock {ITU-TS} {R}ecommendation {Z.120}: {M}essage {S}equence {C}hart
-  {(MSC)}.
-\newblock Geneva, 1997.
-
-\bibitem{Lam94}
-L.~\bgroup\fonteauteurs\bgroup Lamport\egroup\egroup{} :
-\newblock {\em {\LaTeX}---A Document Preparation System---User's Guide and
-  Reference Manual}.
-\newblock Adsison-Wesley, 2nd \'edn, 1994.
-\newblock Updated for {\LaTeXe}.
-
-\bibitem{RudolphGrabowskiGraubmann96}
-E.~\bgroup\fonteauteurs\bgroup Rudolph\egroup\egroup{},
-  \bgroup\fonteauteurs\bgroup P.Graubmann\egroup\egroup{} et
-  J.~\bgroup\fonteauteurs\bgroup Grabowski\egroup\egroup{} :
-\newblock Tutorial on message sequence charts {(MSC'96}).
-\newblock \emph{In} {\em FORTE}, 1996.
+\bibitem{schabanel}
+N.~\bgroup\fonteauteurs\bgroup Schabanel\egroup\egroup{} :
+\newblock Algorithmes d’approximation et algorithmes randomisés.
+\newblock
+  \url{http://pauillac.inria.fr/~quercia/documents-info/Luminy-2003/schabanel/schabanel.pdf},
+  may 2003.
+\newblock Cours donné lors du Stage de Luminy 2003 à destination des
+  enseignants d'informatique de CPGE.
 
 \end{thebibliography}
