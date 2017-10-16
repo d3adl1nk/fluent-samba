@@ -1,4 +1,4 @@
-% Created 2017-10-16 lun. 15:33
+% Created 2017-10-15 dim. 21:41
 \documentclass[12pt,a4paper,twoside]{article}
  \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -98,14 +98,14 @@ cette couleur adjacente à la zone qu'il possède.
 \label{sec:orgheadline2}
 Il convient tout d'abord de créer un type \texttt{boardd} afin
 d'encapsuler un peu le code et de ne pas modifier le plateau de jeu
-n'importe comment. Ce type contient un tableau de char de taille
+n'importe comment. Ce type contient un tableau de caractères de taille
 \(\texttt{BOARDSIZE} ^{2}\), ainsi que deux entiers:
 \texttt{numcellsup} et \texttt{numcellsdown} indiquant le nombre de
 cases possédées par le joueur \^{} et le joueur v respectivement.
 Afin de maintenir cette structure, nous avons implémenté les
 méthodes \texttt{getcell}, \texttt{getnumcellsup},
 \texttt{getnumcellsup}, \texttt{setcell}, ainsi que
-\texttt{boardcreate}\} et \texttt{boardfree}, allouant un tableau de
+\texttt{boardcreate} et \texttt{boardfree}, allouant un tableau de
 la bonne taille, et le libérant respectivement. 
 
 \subsubsection*{Question 2}
@@ -116,7 +116,7 @@ Dans le pire des cas, à chaque itération, l'algorithme met à jour une
 et une seule case. Posons \(n = BOARDSIZE\). Étant donné qu'il y a \(n^{2}\)
 cases dans le tableau, au plus \(n^{2}\) passages sont effectués. Lors d'un
 passage, \(n^{2}\) cases sont examinées, chacune d'elles en un temps
-contant. La complexité dans le pire cas de cet algorithme est donc un
+constant. La complexité dans le pire cas de cet algorithme est donc un
 \(O(n^4)\).
 Cette borne est réellement atteinte: par exemple si une couleur forme
 une spirale rectangulaire jusqu'au centre. La complexité est donc un
@@ -130,9 +130,9 @@ pertinente.
 \label{sec:orgheadline8}
 \paragraph*{Principe de l'algorithme implémenté :}
 \label{sec:orgheadline6}
-Plutôt que d'effectuer des parcours entier du tableau en vérifiant si
+Plutôt que d'effectuer des parcours entiers du tableau en vérifiant si
 les cases ont besoin d'être mises à jour, il est préférable de se
-représenter la zone conquise pas un joueur comme un graphe (non
+représenter la zone conquise par un joueur comme un graphe (non
 orienté), dont les sommets sont les toutes les cases du tableau et les
 arêtes lient chacune des cases conquises par le joueur aux quatre
 cases adjacentes sur le plateau. Il suffit alors d'effectuer un
@@ -140,11 +140,11 @@ parcours de ce graphe en le mettant a jour progressivement.
 
 Nous créons pour cela un second tableau \texttt{boardvisited}, de
 mêmes dimensions, dont les cases indiquent si le sommet \((i,j)\) a été
-visité ou pas. Nous parcourons ensuite récursivement le graphe est
-commençant par la case du coin, qui appartient forcement au joueur. À
+visité ou pas. Nous parcourons ensuite récursivement le graphe en
+commençant par la case du coin, qui appartient nécessairement au joueur. À
 chaque sommet visité, nous le marquons comme tel dans
 \texttt{boardvisited}, et s'il est de la bonne couleur ou appartient au
-joueur courant, nous marquons la case celle du joueur dans
+joueur courant, nous marquons la case comme appartenant au joueur dans
 \texttt{board} et explorons ses voisines non visitées.
 \paragraph*{Complexité dans le pire des cas :}
 \label{sec:orgheadline7}
@@ -157,12 +157,15 @@ est de la même couleur. La complexité est donc un \(\Theta(n^{2})\).
 \label{sec:orgheadline12}
 \subsubsection*{Question 4}
 \label{sec:orgheadline10}
+Les fonctions nécessaires pour faire jouer un joueur contre un autre sont
+\texttt{playerinput} et \texttt{changeplayer}; l'implémentation contraint
+les joueurs à s'affronter sur la même machine.
 \subsubsection*{Question 5}
 \label{sec:orgheadline11}
 La partie peut s'arrêter si l'un des joueurs au moins détient plus de
 la moitié du plateau de jeu. Nous avons donc recours aux attributs
 \texttt{numcellsup} et \texttt{numcellsdown} du type \texttt{boardd},
-afin de savoir si ceux ci excèdent la moitié du nombre de cases total.
+afin de savoir si ceux ci excèdent la moitié du nombre total de cases.
 
 \subsection{La stratégie de l'aléa}
 \label{sec:orgheadline15}
@@ -191,10 +194,10 @@ l'affrontement à nouveau, mais en échangeant les positions de départ.
 \subsubsection*{Question 11}
 \label{sec:orgheadline20}
 Il apparaît facilement qu'en effectuant un parcours entier du plateau
-et en comptant les cases ayant parmi leurs voisines, un appartenant au
+et en comptant les cases ayant parmi leurs voisines, une appartenant au
 joueur courant, il est possible d'obtenir le périmètre de la zone
-détenue par le joueur en \(\Theta(n^{2})\). Il suffit dés lors, pour chaque
-couleur possible, de créer une copie du plateau, d'effectuer sur celle
+détenue par le joueur en \(\Theta(n^{2})\). Il suffit dès lors, pour chaque
+couleur possible, de créer une copie du plateau, d'effectuer sur celle-
 ci une mise à jour en jouant ladite couleur, et de compter le
 périmètre correspondant.
 La complexité de cet algorithme est donc un \(\Theta(n^{2})\).
@@ -202,8 +205,8 @@ La complexité de cet algorithme est donc un \(\Theta(n^{2})\).
 \label{sec:orgheadline21}
 Une des manières d'implémenter le glouton prévoyant est d'effectuer
 pour chacune des couleurs une copie du plateau de jeu, puis de
-modifier celui ci en jouant cette couleur, en comptant le nombre de
-cases ainsi gagnés. Puis d'utiliser la fonction de la question 8 pour
+modifier celui-ci en jouant cette couleur, en comptant le nombre de
+cases ainsi gagnées. Puis d'utiliser la fonction de la question 8 pour
 chacune des couleurs afin d'obtenir le nombre maximal de cases gagnées
 en ayant fixé le premier coup. On choisit ensuite le premier coup afin
 de maximiser ce nombre.  Cet algorithme effectue 7 copies du plateau
@@ -229,7 +232,7 @@ d'utiliser \texttt{calcnewcellsoptimized}).
 \label{sec:orgheadline28}
 \subsection{Bibliographie}
 \label{sec:orgheadline27}
-Ne sont cités ici que les ouvrages et sites dont je me suis le plus
+Ne sont cités ici que les ouvrages et sites dont nous nous sommes le plus
 servi.
 
 \def\section*#1{}

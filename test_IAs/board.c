@@ -31,9 +31,15 @@ int get_num_cells_down(board_d* board)
 	return (*board).num_cells_down;
 }
 
-/** Changes the color of a given board cell and updates the count of
- * each player's cells.
+/**changes the color of a given board cell without modifying
+ * the number of cells the players have.
 */
+void set_cell_soft(board_d* board, int i, int j, char color)
+{
+	(*board).cells[i * BOARD_SIZE + j] = color;
+}
+
+/** Changes the color of a given board cell */
 void set_cell(board_d* board, int i, int j, char color)
 {
 	if (get_cell(board, i, j) == 'v')
@@ -90,7 +96,8 @@ void rand_board(board_d* board)
 		for (j = 0; j < BOARD_SIZE; j++)
 		{
 			rand_color = 65 + (rand() % 7);
-			set_cell(board, i, j, rand_color);
+			//memory problems when doing multiple game sets if soft version not used...
+			set_cell_soft(board, i, j, rand_color);
 		}
 	}
 	
