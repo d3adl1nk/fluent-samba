@@ -4,6 +4,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amssymb,gensymb,mathtools}
 \usepackage{xspace}
+\usepackage{listings}%
+
 \usepackage[paper=a4paper,textwidth=6.6in,top=38mm,bottom=38mm]{geometry} % ,left=20mm,right=20mm, ,headsep=0pt
 %\usepackage{a4wide}
 \usepackage{palatino}
@@ -88,44 +90,65 @@ développé en 1991. Le principe est simple: deux joueurs essayent de
 conquérir la plus grande surface d'un terrain de jeu constitué de
 cases juxtaposées, de sept couleurs différentes. Pour cela, chaque
 joueur choisit à son tour une couleur, et conquiert toute case de
-cette couleur adjacente à la zone qu'il possède.
-
+cette couleur adjacente à la zone qu'il possède.  Nous nous sommes
+penchés sur l'implémentation de ce jeu, de ses mécanismes et de
+différents joueurs artificiels. Ce projet amène à comparer ces
+différents joueurs entre eux afin de rechercher une stratégie aussi
+bonne que possible. De plus, de part la taille du programme, il
+devient rréellement nécessaire de modulariser le code et de le
+découper en plusieurs fichiers.
 \section{Réponses aux questions}
 \label{sec:orgheadline25}
 \subsection{Voir le monde en sept couleurs}
 \label{sec:orgheadline9}
-\subsubsection*{Question 1}
-\label{sec:orgheadline2}
-Il convient tout d'abord de créer un type \texttt{boardd} afin
+\subsubsection*{Implémentation du type \texttt{board\_d}}
+Il convient tout d'abord de créer un type \texttt{board\_d} afin
 d'encapsuler un peu le code et de ne pas modifier le plateau de jeu
 n'importe comment. Ce type contient un tableau de caractères de taille
-\(\texttt{BOARDSIZE} ^{2}\), ainsi que deux entiers:
-\texttt{numcellsup} et \texttt{numcellsdown} indiquant le nombre de
-cases possédées par le joueur \^{} et le joueur v respectivement.
+\(\texttt{BOARD\_SIZE} ^{2}\), ainsi que deux entiers:
+\texttt{num\_cell\_sup} et \texttt{num\_cells\_down} indiquant le nombre de
+cases possédées par le joueur \texttt{\^} et le joueur \texttt{v} respectivement.
 Afin de maintenir cette structure, nous avons implémenté les
-méthodes \texttt{getcell}, \texttt{getnumcellsup},
-\texttt{getnumcellsup}, \texttt{setcell}, ainsi que
-\texttt{boardcreate} et \texttt{boardfree}, allouant un tableau de
+méthodes \texttt{get\_cell}, \texttt{get\_num\_cells\_up},
+\texttt{get\_num\_cells\_down}, \texttt{set\_cell}, ainsi que
+\texttt{board\_create} et \texttt{board\_free}, allouant un tableau de
 la bonne taille, et le libérant respectivement. 
-
+\subsubsection*{Question 1}
+\label{sec:orgheadline2}
+La fonction \texttt{rand\_board} prend en argument un pointeur vers un
+tableau, et initialise en place chacune des cases de celui ci
+aléatoirement.  Nous avons pour cela recours à la fonction
+\texttt{rand}. Celle-ci renvoie un \texttt{int} tiré uniformement (et
+donc compris entre \(0\)
+et \(RAND\_MAX = 32767\)),
+que nous ramenons entre 0 et 6 avec une division euclidienne. On
+notera que 32768 n'est pas divsible par 7, ainsi la lettre A est très
+légerement plus probable que les autres, mais ceci est négligeable
+(aux vues des dimensions du tableaux notamment).
 \subsubsection*{Question 2}
 \label{sec:orgheadline5}
+La fonction \texttt{update\_board} prend en argument un pointeur vers
+le tableau de jeu, ainsi que le joueur courant et la couleur jouée.
+la fonction \texttt{print\_board} affiche les valeurs des cases du
+tableau du pointeur qui lui est donné en argument. Elle permet de
+s'assurer sur quelques exemples que le tableau évolue bien de la
+manière souhaitée. 
 \paragraph*{Complexité dans le pire cas :}
 \label{sec:orgheadline3}
 Dans le pire des cas, à chaque itération, l'algorithme met à jour une
-et une seule case. Posons \(n = BOARDSIZE\). Étant donné qu'il y a \(n^{2}\)
+et une seule case. Posons \(n = \texttt{BOARD\_SIZE}\). Étant donné qu'il y a \(n^{2}\)
 cases dans le tableau, au plus \(n^{2}\) passages sont effectués. Lors d'un
 passage, \(n^{2}\) cases sont examinées, chacune d'elles en un temps
 constant. La complexité dans le pire cas de cet algorithme est donc un
 \(O(n^4)\).
 Cette borne est réellement atteinte: par exemple si une couleur forme
 une spirale rectangulaire jusqu'au centre. La complexité est donc un
-\(\Theta(n^{2})\). 
+\(\Theta(n^{4})\). 
 \paragraph*{Complexité amortie :}
 \label{sec:orgheadline4}
 Le cas énoncé précédemment est assez pathologique et ne peut se
-produire trop souvent. L'analyse de la complexité amortie est donc
-pertinente.
+produire trop souvent. L'analyse de la complexité amortie serait donc
+pertinente, bien qu'un peu délicate.
 \subsubsection*{Question 3 (bonus)}
 \label{sec:orgheadline8}
 \paragraph*{Principe de l'algorithme implémenté :}
@@ -138,14 +161,20 @@ arêtes lient chacune des cases conquises par le joueur aux quatre
 cases adjacentes sur le plateau. Il suffit alors d'effectuer un
 parcours de ce graphe en le mettant a jour progressivement. 
 
-Nous créons pour cela un second tableau \texttt{boardvisited}, de
-mêmes dimensions, dont les cases indiquent si le sommet \((i,j)\) a été
-visité ou pas. Nous parcourons ensuite récursivement le graphe en
-commençant par la case du coin, qui appartient nécessairement au joueur. À
+Nous implémentons donc deux fonctions, la première
+\texttt{update\_board\_optimized} crée un second tableau
+\texttt{board\_visited}, de mêmes dimensions, dont les cases indiquent
+si le sommet \((i,j)\)
+a été visité ou pas.  Nous parcourons ensuite récursivement le graphe
+en commençant par la case du coin (qui appartient nécessairement au
+joueur), à l'aide de la fonction \texttt{update\_board\_rec}.  À
 chaque sommet visité, nous le marquons comme tel dans
-\texttt{boardvisited}, et s'il est de la bonne couleur ou appartient au
-joueur courant, nous marquons la case comme appartenant au joueur dans
-\texttt{board} et explorons ses voisines non visitées.
+\texttt{board\_visited}, et s'il est de la bonne couleur ou appartient
+au joueur courant, nous marquons la case comme appartenant au joueur
+dans \texttt{board} et explorons ses voisines non visitées.
+
+Les fonctions \texttt{update\_board\_rec} et
+\texttt{update\_board\_optimized} opèrent toutes deux en place.
 \paragraph*{Complexité dans le pire des cas :}
 \label{sec:orgheadline7}
 Chaque case du tableau est visité un nombre fini borné de fois (au
@@ -158,30 +187,63 @@ est de la même couleur. La complexité est donc un \(\Theta(n^{2})\).
 \subsubsection*{Question 4}
 \label{sec:orgheadline10}
 Les fonctions nécessaires pour faire jouer un joueur contre un autre sont
-\texttt{playerinput} et \texttt{changeplayer}; l'implémentation contraint
-les joueurs à s'affronter sur la même machine.
+\texttt{player\_input} qui permet de récupérer la couleur jouée par le
+joueur courant, et \texttt{change\_player}. La fonction
+\texttt{game\_loop} effectue alors l'essentiel du travail en faisant
+appel aux bonnes fonctions. Pour jouer à deux, il suffit de remplacer
+
+\begin{lstlisting}
+case 'v':
+    color_input = IA_random_wise(board, *player);
+    *is_IA_turn = true;
+    break;
+\end{lstlisting}
+par 
+\begin{lstlisting}
+case 'v':
+    color_input = player_input();
+    *is_IA_turn = true;
+    break;
+\end{lstlisting}
+
+
+L'implémentation contraint les joueurs à s'affronter sur la même
+machine.
+
 \subsubsection*{Question 5}
 \label{sec:orgheadline11}
 La partie peut s'arrêter si l'un des joueurs au moins détient plus de
 la moitié du plateau de jeu. Nous avons donc recours aux attributs
-\texttt{numcellsup} et \texttt{numcellsdown} du type \texttt{boardd},
+\texttt{num\_cells\_up} et \texttt{num\_cells\_down} du type \texttt{board\_d},
 afin de savoir si ceux ci excèdent la moitié du nombre total de cases.
+La fonction \texttt{is\_end} vérifie cette condition, et la fonction
+\texttt{print\_occupation} affiche le pourcentage du plateau occupé
+par chaque joueur.
 
 \subsection{La stratégie de l'aléa}
 \label{sec:orgheadline15}
 \subsubsection*{Question 6}
 \label{sec:orgheadline13}
+La fonction \texttt{IA\_random} ne prend aucun argument et renvoie une
+couleur tirée au hasard.
 \subsubsection*{Question 7}
 \label{sec:orgheadline14}
+La fonction \texttt{IA\_random\_wise} fait de même en s'assurant que
+que la couleur jouée permet de gagner du terrain. On détermine pour
+cela quelles sont les couleus adissibles, et nous tirons ensuite
+une couleur au hasard, jusqu'à que celle ci soit admissible.
 \subsection{La loi du plus fort}
 \label{sec:orgheadline19}
 \subsubsection*{Question 8}
 \label{sec:orgheadline16}
-Nous allons pour cela reprendre et modifier légèrement la fonction
-\texttt{updateboardoptimized} impémentée pour la question 3, mais en
-comptant le nombre de cases modifiables en jouant une couleur donnée au
-lieu de les modifier. Nous effectuons ensuite le choix maximisant ce
-nombre de cases.
+La fonction \texttt{IA\_greedy} prend en argument un pointeur vers
+leplateau de jeu, ainsi que le joueur courant et renvoie la couleur
+choisie par l'algorithme glouton.  Nous avons pour cela repris et
+légèrement modifié la fonction \texttt{update\_board\_optimized}
+impémentée pour la question 3: nous comptons désormais le nombre de
+cases modifiables en jouant une couleur donnée au lieu de les
+modifier. Nous effectuons ensuite le choix maximisant ce nombre de
+cases.
 \subsubsection*{Question 9}
 \label{sec:orgheadline17}
 Pour que le combat soit "équitable", le mieux est de faire s'affronter
@@ -189,6 +251,11 @@ les deux joueurs artificiels sur un plateau donné, puis d'effectuer
 l'affrontement à nouveau, mais en échangeant les positions de départ.
 \subsubsection*{Question 10}
 \label{sec:orgheadline18}
+Sur les cent essais effectués (sur des grilles carées de coté 30, et
+en échangeant à chaque fois les rôles des joueurs), le
+joueur artificiel glouton à systématiquement gagné. 
+Il pourrait être intéressant de déterminer expérimentalement
+l'influence de la taille de la grille.
 \subsection{Les nombreuses huitièmes merveilles du monde (bonus)}
 \label{sec:orgheadline22}
 \subsubsection*{Question 11}
@@ -201,8 +268,12 @@ couleur possible, de créer une copie du plateau, d'effectuer sur celle-
 ci une mise à jour en jouant ladite couleur, et de compter le
 périmètre correspondant.
 La complexité de cet algorithme est donc un \(\Theta(n^{2})\).
+La fonction modélisant l'algorithme hégémonique est
+\texttt{IA\_greedy\_border}.
 \subsubsection*{Question 12}
 \label{sec:orgheadline21}
+La fonction modélisant le glouton prévoyant est
+\texttt{IA\_foresighted\_greedy}. 
 Une des manières d'implémenter le glouton prévoyant est d'effectuer
 pour chacune des couleurs une copie du plateau de jeu, puis de
 modifier celui-ci en jouant cette couleur, en comptant le nombre de
@@ -210,21 +281,61 @@ cases ainsi gagnées. Puis d'utiliser la fonction de la question 8 pour
 chacune des couleurs afin d'obtenir le nombre maximal de cases gagnées
 en ayant fixé le premier coup. On choisit ensuite le premier coup afin
 de maximiser ce nombre.  Cet algorithme effectue 7 copies du plateau
-en \(\Theta(n^{2})\), fait sept appels à \texttt{updateboardoptimized} en
+en \(\Theta(n^{2})\), fait sept appels à \texttt{update\_board\_optimized} en
 \(\Theta(n^{2})\) et fait appel 49 fois à la fonction
-\texttt{calcnewcellsoptimized} qui s'exécute en \(\Theta(n^{2})\). Il s'exécute
+\texttt{calc\_new\_cells\_optimized} qui s'exécute en \(\Theta(n^{2})\). Il s'exécute
 donc en \(\Theta(n^{2})\).
 Si on veut explorer \(m\) coups consécutifs, cette complexité passe à un
 \(\Theta(\exp(m)*n^{2})\), car il faut alors effectuer 7 fois plus de copies du
 tableau pour chaque coup additionnel (sauf le dernier ou il est possible
-d'utiliser \texttt{calcnewcellsoptimized}).
+d'utiliser \texttt{calc\_new\_cells\_optimized}).
+
 \subsection{Le pire du monde merveilleux des sept couleurs (bonus)}
 \label{sec:orgheadline24}
-\subsubsection*{Question 13}
+\subsubsection*{Question 14}
 \label{sec:orgheadline23}
-\section{Conclusion}
+Cet algorithme n'a pas été implémenté. 
+
+En revanche, on remarque que l'évolution du plateau de jeu est
+radicalement différente entre le joueur artificiel hégémonique et le
+glouton. De plus, l'efficacité de cette évolution varie grandement en
+fonction de l'avancée du jeu.  En effet, l'algorithme du glouton
+hégémonique va avoir tendance à étendre la zone maîtrisée par le
+joueur en se ramifiant énormément, quitte à laisser des \"trous\" dans
+la zone conquise. Par ailleurs, cet algorithme semble extremement
+éfficace en début de partie, au contraire, la fin de partie est très
+lente : si la zone maitrisée englobe totalement une zone non conquise
+par exemple, alors conquérir les cases au bord de celle ci réduit le
+périmètre, cette conquète va donc avoir tendance à être ralentie.  À
+l'inverse la zone maitrisée par l'algorithme glouton semble être plus
+compacte et évoluer légerement plus lentement.
+
+De ces observations, il paraît judicieux d'utiliser l'algorithme du
+glouton hégémonique jusqu'à un certain point, avant de changer de
+stratégie, et d'utiliser l(algorithme glouton classique.
+
+Reste à déterminer le moment judicieux pour éffectuer la
+transition. Cela peut se déterminer expérimentalement en traçant la
+vitesse d'expansion de la zone maîtrisée par l'algorithme hégémonique
+en fonction du temps. Ou bien en traçant celle ci en fonction du
+pourcentage d'occupation du terrain. Ou encore choisissant de
+déterminer le tour de transition à l'aide d'une loi poisson par
+exemple, dont le paramètre \(\lambda\) optimal, serait recherché
+expérimentalement.
+ 
+\section{Synthèse}
 \label{sec:orgheadline26}
 \label{sec:conclusion}
+Plusieurs joueurs artificiels ont été implémentés: 
+\begin{itemize}
+\item l'algorithme glouton classique consistant à maximiser le nombre
+  de cases gagnées à chaque tour,
+\item l'algorihtme glouton prévoyant, faisant le choix permettant de
+  maximiser le nombre de cases gagnées au terme de deux tours,
+\item l'algorithme glouton hégémonique, maximisant le périmètre de la
+  zone maîtrisée.
+\end{itemize}
+
 
 \clearpage\appendix
 
