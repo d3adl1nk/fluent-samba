@@ -5,6 +5,7 @@
 #include <stdlib.h>		/* rand */
 #include <time.h>
 #include <stdbool.h>	/* boolean values */
+#include <unistd.h> 	/* sleep */
 
 /* We want a 30x30 board game by default */
 #define BOARD_SIZE 30

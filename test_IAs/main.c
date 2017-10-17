@@ -82,12 +82,12 @@ void game_loop(board_d* board, char* player, bool is_first_game)
 		{
 			case '^':
 				(is_first_game == true) ?
-				(color_input = IA_greedy(board, *player)) : (color_input = IA_random());
+				(color_input = IA_greedy(board, *player)) : (color_input = IA_greedy(board, *player));
 				break;
 	  
 			case 'v':
 				(is_first_game == true) ?
-				(color_input = IA_random()) : (color_input = IA_greedy(board, *player));
+				(color_input = IA_greedy(board, *player)) : (color_input = IA_greedy(board, *player));
 				break;
 	  
 			default:
@@ -197,6 +197,9 @@ int main(int argc, char *argv[])
 	for (i = 0; i < set_num; i++)
 	{
 		game_set(up_net_wins);
+		/* sleep lets the seed (local time) used for rand_board
+		change so the matches are different each time */
+		sleep(1);
 	}
 	
 	printf("\nUP PLAYER NET WINS OVER %d GAME SETS : %d\n", set_num, *up_net_wins);
