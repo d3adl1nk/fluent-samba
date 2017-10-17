@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.26)  17 OCT 2017 20:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.5.26)  17 OCT 2017 20:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1086,7 +1086,7 @@ Type  H <return>  for immediate help.
 l.51 \begin{document}
                      
 ? 
-(./rapport.aux)
+No file rapport.aux.
 \openout1 = `rapport.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
@@ -1104,7 +1104,7 @@ LaTeX Font Info:    ... okay on input line 51.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 51.
 LaTeX Font Info:    ... okay on input line 51.
 LaTeX Font Info:    Try loading font information for T1+ppl on input line 51.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ppl.fd
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 )
 LaTeX Info: Redefining \celsius on input line 51.
@@ -1202,12 +1202,11 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 51.
 LaTeX Info: Redefining \pageref on input line 51.
 LaTeX Info: Redefining \nameref on input line 51.
-
-(./rapport.out) (./rapport.out)
 \@outlinefile=\write7
 \openout7 = `rapport.out'.
 
- (./_minted-rapport/default-pyg-prefix.pygstyle)
+
+(./_minted-rapport/default-pyg-prefix.pygstyle)
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <12> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 79.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <20.74> not available
@@ -1219,6 +1218,7 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <14.4> not available
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <12> not available
 (Font)              Font shape `T1/pcr/b/n' tried instead on input line 104.
 LaTeX Font Info:    Try loading font information for U+msa on input line 108.
+
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
@@ -1318,7 +1318,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[5] (./rapport.bbl)
+[5]
+No file rapport.bbl.
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 14.49998pt.
@@ -1333,16 +1334,26 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 354.
  (./rapport.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 354.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 354.
-Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 99C4C427994DFEB4043322EF2BEBFC66;772.
+
+
+Package rerunfilecheck Warning: File `rapport.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `rapport.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  99C4C427994DFEB4043322EF2BEBFC66;772.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 354.
  ) 
 Here is how much of TeX's memory you used:
- 23394 strings out of 494936
- 415710 string characters out of 6179808
- 528251 words of memory out of 5000000
- 26169 multiletter control sequences out of 15000+600000
- 30998 words of font info for 61 fonts, out of 8000000 for 9000
+ 23364 strings out of 494936
+ 415350 string characters out of 6179808
+ 526748 words of memory out of 5000000
+ 26150 multiletter control sequences out of 15000+600000
+ 27594 words of font info for 58 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  62i,11n,56p,940b,1231s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
@@ -1351,14 +1362,13 @@ f-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
 w/courier/ucrb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucr
-r8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/urw/palatino/uplr8a.pfb>
-Output written on rapport.pdf (6 pages, 121438 bytes).
+r8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb>
+Output written on rapport.pdf (6 pages, 112847 bytes).
 PDF statistics:
- 164 PDF objects out of 1000 (max. 8388607)
- 144 compressed objects within 2 object streams
- 47 named destinations out of 1000 (max. 500000)
- 101 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 123 PDF objects out of 1000 (max. 8388607)
+ 104 compressed objects within 2 object streams
+ 46 named destinations out of 1000 (max. 500000)
+ 13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
