@@ -269,8 +269,10 @@ ci une mise à jour en jouant ladite couleur, et de compter le
 périmètre correspondant.
 La complexité de cet algorithme est donc un \(\Theta(n^{2})\).
 La fonction modélisant l'algorithme hégémonique est
-
 \texttt{IA\_greedy\_border}.
+En confrontant cet algorithme avec l'algorithme glouton, il apparaît
+que ce dernier est meilleur (quasi intégralité des parties gagnées).
+
 \subsubsection*{Question 12}
 \label{sec:orgheadline21}
 La fonction modélisant le glouton prévoyant est
@@ -336,7 +338,10 @@ Plusieurs joueurs artificiels ont été implémentés:
 \item l'algorithme glouton hégémonique, maximisant le périmètre de la
   zone maîtrisée.
 \end{itemize}
-
+L'algorithme hégémonique est assez efficace en début de partie, à
+tendance a créer une zone comportant de nombreuses ramifications et
+trous, mais devient peu efficace en fin de partie. L'algorithme
+glouton est globalement plus efficace, crée une zone plus compacte.
 
 \clearpage\appendix
 
