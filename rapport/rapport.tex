@@ -95,7 +95,7 @@ penchés sur l'implémentation de ce jeu, de ses mécanismes et de
 différents joueurs artificiels. Ce projet amène à comparer ces
 différents joueurs entre eux afin de rechercher une stratégie aussi
 bonne que possible. De plus, de part la taille du programme, il
-devient rréellement nécessaire de modulariser le code et de le
+devient réellement nécessaire de modulariser le code et de le
 découper en plusieurs fichiers.
 \section{Réponses aux questions}
 \label{sec:orgheadline25}
@@ -116,7 +116,7 @@ la bonne taille, et le libérant respectivement.
 \subsubsection*{Question 1}
 \label{sec:orgheadline2}
 La fonction \texttt{rand\_board} prend en argument un pointeur vers un
-tableau, et initialise en place chacune des cases de celui ci
+tableau, et initialise en place chacune des cases de celui-ci
 aléatoirement.  Nous avons pour cela recours à la fonction
 \texttt{rand}. Celle-ci renvoie un \texttt{int} tiré uniformement (et
 donc compris entre \(0\)
@@ -230,14 +230,14 @@ couleur tirée au hasard.
 \label{sec:orgheadline14}
 La fonction \texttt{IA\_random\_wise} fait de même en s'assurant que
 que la couleur jouée permet de gagner du terrain. On détermine pour
-cela quelles sont les couleus adissibles, et nous tirons ensuite
-une couleur au hasard, jusqu'à que celle ci soit admissible.
+cela quelles sont les couleurs admissibles, et nous tirons ensuite
+une couleur au hasard, jusqu'à que celle-ci soit admissible.
 \subsection{La loi du plus fort}
 \label{sec:orgheadline19}
 \subsubsection*{Question 8}
 \label{sec:orgheadline16}
 La fonction \texttt{IA\_greedy} prend en argument un pointeur vers
-leplateau de jeu, ainsi que le joueur courant et renvoie la couleur
+le plateau de jeu, ainsi que le joueur courant et renvoie la couleur
 choisie par l'algorithme glouton.  Nous avons pour cela repris et
 légèrement modifié la fonction \texttt{update\_board\_optimized}
 impémentée pour la question 3: nous comptons désormais le nombre de
@@ -269,6 +269,7 @@ ci une mise à jour en jouant ladite couleur, et de compter le
 périmètre correspondant.
 La complexité de cet algorithme est donc un \(\Theta(n^{2})\).
 La fonction modélisant l'algorithme hégémonique est
+
 \texttt{IA\_greedy\_border}.
 \subsubsection*{Question 12}
 \label{sec:orgheadline21}
@@ -301,25 +302,25 @@ radicalement différente entre le joueur artificiel hégémonique et le
 glouton. De plus, l'efficacité de cette évolution varie grandement en
 fonction de l'avancée du jeu.  En effet, l'algorithme du glouton
 hégémonique va avoir tendance à étendre la zone maîtrisée par le
-joueur en se ramifiant énormément, quitte à laisser des \"trous\" dans
-la zone conquise. Par ailleurs, cet algorithme semble extremement
-éfficace en début de partie, au contraire, la fin de partie est très
+joueur en se ramifiant énormément, quitte à laisser des ''trous'' dans
+la zone conquise. Par ailleurs, cet algorithme semble extrêmement
+efficace en début de partie, au contraire, la fin de partie est très
 lente : si la zone maitrisée englobe totalement une zone non conquise
-par exemple, alors conquérir les cases au bord de celle ci réduit le
-périmètre, cette conquète va donc avoir tendance à être ralentie.  À
+par exemple, alors conquérir les cases au bord de celle-ci réduit le
+périmètre, cette conquête va donc avoir tendance à être ralentie.  À
 l'inverse la zone maitrisée par l'algorithme glouton semble être plus
-compacte et évoluer légerement plus lentement.
+compacte et évoluer un peu plus lentement.
 
 De ces observations, il paraît judicieux d'utiliser l'algorithme du
 glouton hégémonique jusqu'à un certain point, avant de changer de
-stratégie, et d'utiliser l(algorithme glouton classique.
+stratégie, et d'utiliser l'algorithme glouton classique ou prévoyant.
 
-Reste à déterminer le moment judicieux pour éffectuer la
+Reste à déterminer le moment judicieux pour effectuer la
 transition. Cela peut se déterminer expérimentalement en traçant la
 vitesse d'expansion de la zone maîtrisée par l'algorithme hégémonique
 en fonction du temps. Ou bien en traçant celle ci en fonction du
-pourcentage d'occupation du terrain. Ou encore choisissant de
-déterminer le tour de transition à l'aide d'une loi poisson par
+pourcentage d'occupation du terrain. Ou encore en choisissant de
+déterminer le tour de transition à l'aide d'une loi de Poisson par
 exemple, dont le paramètre \(\lambda\) optimal, serait recherché
 expérimentalement.
  

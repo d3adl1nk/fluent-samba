@@ -1,0 +1,16 @@
+\begin{thebibliography}{1}
+\expandafter\ifx\csname fonteauteurs\endcsname\relax
+\def\fonteauteurs{\scshape}\fi
+
+\bibitem{Martin.Quinson}
+M.~\bgroup\fonteauteurs\bgroup Quinson\egroup\egroup{} :
+\newblock Mémoire dynamique en c.
+\newblock \url{http://people.irisa.fr/Martin.Quinson/Teaching/ArcSys/}, 2017.
+\newblock Makefile, main...
+
+\bibitem{wikipedia}
+\bgroup\fonteauteurs\bgroup Wikipédia\egroup\egroup{} :
+\newblock 7 colors.
+\newblock \url{https://en.wikipedia.org/wiki/7_Colors}, january 2017.
+
+\end{thebibliography}
