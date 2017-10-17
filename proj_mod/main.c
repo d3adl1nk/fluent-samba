@@ -88,7 +88,8 @@ void game_loop(board_d* board, char* player, bool* is_IA_turn)
 				break;
 	  
 			case 'v':
-				color_input = IA_random();
+				color_input = IA_random_wise(board, *player);
+				//color_input = player_input();
 				*is_IA_turn = true;
 				break;
 	  
